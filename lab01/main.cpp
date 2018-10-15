@@ -4,14 +4,14 @@
 
 using namespace std;
 
-typedef class{
+typedef class{         //创建学生类
 public:
     int num;
     string name;
     int core1;
     int core2;
 }stu;
-void display(QVector<stu> *data)
+void display(QVector<stu> *data)      //数组输出函数
 {
     cout<<"学号"<<"          "<<"姓名"<<"     "<<"课程1"<<"   "<<"课程2"<<endl;
     for(QVector<stu>::iterator m=data->begin();m!=data->end();m++)
@@ -58,8 +58,8 @@ bool c_core2(stu a,stu b)
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    stu stu1,stu2,stu3,stu4;
-    stu1.num=1403130209;
+    stu stu1,stu2,stu3,stu4;  //创建四个stu变量
+    stu1.num=1403130209;//初始化四个变量
     stu1.name="鲁智深";
     stu1.core1=80;
     stu1.core2=72;
@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
     stu4.name=" 武松  ";
     stu4.core1=88;
     stu4.core2=80;
+
     QVector<stu> data;
     data.push_back(stu1);
     data.push_back(stu2);
@@ -86,15 +87,15 @@ int main(int argc, char *argv[])
     cout<<"初始列表为：\n";
     display(&data);
     QVector<stu> s_name=data;
-    sort(s_name.begin(),s_name.end(),c_name);
+    sort(s_name.begin(),s_name.end(),c_name);//对姓名从低到高排序
     cout<<"按姓名排序"<<endl;
     display(&s_name);
     QVector<stu> s_core1=data;
-    sort(s_core1.begin(),s_core1.end(),c_core1);
+    sort(s_core1.begin(),s_core1.end(),c_core1);//对课程一从低到高排序
     cout<<"按课程1排序"<<endl;
     display(&s_core1);
     QVector<stu> s_core2=data;
-    sort(s_core2.begin(),s_core2.end(),c_core2);
+    sort(s_core2.begin(),s_core2.end(),c_core2);//对课程二从低到高排序
     cout<<"按课程2排序"<<endl;
     display(&s_core2);
 
