@@ -83,192 +83,8 @@ bool myCmp::operator()(const studData &d1, const studData &d2)
         else
             result = true;
         break;
-    case SK::col03:
-        if(d1.core.at(0)>=d2.core.at(0))
-            result = false;
-        else
-            result = true;
+    default : result=(d1.core.at(currentColumn-3)>d2.core.at(currentColumn-3));
         break;
-    case SK::col04:
-       if(d1.core.at(1)>=d2.core.at(1))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col05:
-       if(d1.core.at(2)>=d2.core.at(2))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col06:
-       if(d1.core.at(3)>=d2.core.at(3))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col07:
-       if(d1.core.at(4)>=d2.core.at(4))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col08:
-       if(d1.core.at(5)>=d2.core.at(5))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col09:
-       if(d1.core.at(6)>=d2.core.at(6))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col10:
-       if(d1.core.at(7)>=d2.core.at(7))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col11:
-       if(d1.core.at(8)>=d2.core.at(8))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col12:
-       if(d1.core.at(9)>=d2.core.at(9))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col13:
-       if(d1.core.at(10)>=d2.core.at(10))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col14:
-       if(d1.core.at(11)>=d2.core.at(11))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col15:
-       if(d1.core.at(12)>=d2.core.at(12))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col16:
-       if(d1.core.at(13)>=d2.core.at(13))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col17:
-       if(d1.core.at(14)>=d2.core.at(14))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col18:
-       if(d1.core.at(15)>=d2.core.at(15))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col19:
-       if(d1.core.at(16)>=d2.core.at(16))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col20:
-       if(d1.core.at(17)>=d2.core.at(17))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col21:
-       if(d1.core.at(18)>=d2.core.at(18))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col22:
-       if(d1.core.at(19)>=d2.core.at(19))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col23:
-       if(d1.core.at(20)>=d2.core.at(20))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col24:
-       if(d1.core.at(21)>=d2.core.at(21))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col25:
-       if(d1.core.at(22)>=d2.core.at(22))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col26:
-       if(d1.core.at(23)>=d2.core.at(24))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col27:
-       if(d1.core.at(25)>=d2.core.at(25))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col28:
-       if(d1.core.at(26)>=d2.core.at(26))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col29:
-       if(d1.core.at(27)>=d2.core.at(27))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col30:
-       if(d1.core.at(28)>=d2.core.at(28))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col31:
-       if(d1.core.at(29)>=d2.core.at(29))
-           result = false;
-       else
-           result = true;
-       break;
-    case SK::col32:
-       if(d1.core.at(30)>=d2.core.at(30))
-           result = false;
-       else
-           result = true;
-       break;
-
-
-    // ...
-    // 请补全运算符重载函数
-    // ...
-    //
     }
     return result;
 
@@ -279,36 +95,70 @@ class ScoreSorter
 {
 public:
     ScoreSorter(QString dataFile);
+    readFile();
+    doSort(QString,int);
+    QString tempFile;
+};
 
-    // ...
-    // 请补全该类，使其实现上述要求
-    // ...
+ ScoreSorter::ScoreSorter(QString dataFile)
+{
+     tempFile=dataFile;
 }
-
-// 请补全
-ScoreSorter::ScoreSorter(QString dataFile){
-     sort(s_name.begin(),s_name.end(),c_name);
+ScoreSorter::doSort(QString tempFile,int i)
+{
+    std::sort (tempFile.begin(),tempFile.end(),myCmp::operator (i));
 }
-
+ScoreSorter::readFile()
+{
+    QFile file(tempFile);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return -1;
+    while(!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        qDebug<<line;
+    }
+}
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    // 自定义qDebug
+    QByteArray localMsg = msg.toLocal8Bit();
+        switch (type) {
+        case QtDebugMsg:
+            fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtInfoMsg:
+            fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtWarningMsg:
+            fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtCriticalMsg:
+            fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtFatalMsg:
+            fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            abort();
+        }
 }
 
-int main()
+int main ()
 {
+    int a;
+    printf("输入一个整数");
+    scanf("%d",&a);
     qInstallMessageHandler(myMessageOutput);
     QString datafile = "data.txt";
 
     // 如果排序后文件已存在，则删除之
     QFile f("sorted_"+datafile);
-    if (f.exists()){
+    if (f.exists())
+    {
         f.remove();
     }
 
     ScoreSorter s(datafile);
     s.readFile();
-    s.doSort();
+    s.doSort(datafile,a);
     return 0;
 }
