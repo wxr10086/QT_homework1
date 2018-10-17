@@ -47,18 +47,15 @@ enum SortKind{
 
 typedef struct{
     QStringList s;
-} studData;
+} studData;//创建studData结构体；
 
-QDebug operator<< (QDebug d, const studData &data) {
-    //请补全运算符重载函数，使其可以直接输出studData结构
+QDebug operator<< (QDebug d, const studData &data) {   //运算符重载函数，使其可以直接输出studData结构
     for(int i=0;i<data.s.size();i++)
     {
         d.noquote().nospace()<<QString(data.s.at(i))<<" ";
     }
     return d;
 }
-
-// 比较类，用于std::sort第三个参数
 class myCmp {
 public:
     myCmp(int selectedColumn) { this->currentColumn = selectedColumn; }
@@ -66,14 +63,14 @@ public:
 private:
     int currentColumn;
 };
-
 bool myCmp::operator()(const studData &d1, const studData &d2)
 {
     if(d1.s.at (currentColumn+1)>d2.s.at(currentColumn+1))
-    return 0 ;
+        return 0 ;
     else
         return 1;
-}
+}// 比较类，用于std::sort第三个参数
+
 
 
 class ScoreSorter
@@ -86,7 +83,7 @@ private:
     QString tempFile;
     QList<studData> data;
     studData list;
-    void out_file(quint8 lie);
+    void write_file(quint8 lie);
 };
 
 
@@ -100,20 +97,20 @@ private:
      {
          myCmp cmp(i-1);
          std::sort(this->data.begin() , this->data.end() ,cmp );
-         qDebug()<<"oder"<<i+1<<"column";
-         qDebug() << ""<< (this->list)<<"\t";
-         for(int i=0;i<this->data.size();i++)  qDebug() << this->data.at(i)<<"\t";
+         qDebug()<<"oder"<<i+1<<"column";//输出“按照第几列排序”
+         qDebug() << ""<< (this->list)<<"\t";//输出表头
+         for(int i=0;i<this->data.size();i++)  qDebug() << this->data.at(i)<<"\t";//输出学生信息
          qDebug()<<"************************************************\n";
-         this->out_file(i+1);
+         this->write_file(i+1);//调用私有成员函数进行数据写入
      }
  }
- void ScoreSorter::out_file(quint8 lie)
+ void ScoreSorter::write_file(quint8 lie)
  {
      QFile file("sorted_"+this->tempFile);
      file.open(QIODevice::ReadWrite | QIODevice::Append);
      QTextStream stream(&file);
-     stream.setCodec("UTF-8");
-     stream<<QString("排序第 ")<<lie <<QString(" 列：")<<"\n";
+     stream.setCodec("UTF-8");//用UTF-8编码输入
+     stream<<QString("order ")<<lie <<QString(" column")<<"\r\n";
      stream<<"\t";
      for(int j=0;j<this->list.s.size();j++)
          stream<<this->list.s.at(j)<<"\t";
