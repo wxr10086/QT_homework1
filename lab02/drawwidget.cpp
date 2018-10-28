@@ -7,9 +7,6 @@
 #include <QPoint>
 #include <QPainter>
 #include <QPalette>
-
-
-#include "drawwidget.h"
 #include <QMouseEvent>
 #include <QPen>
 #include <QMessageBox>
@@ -239,6 +236,16 @@ void DrawWidget::drawShape(const QPointF ptStart,const QPointF ptEnd,const ST::S
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen (pen);
     switch (drawType) {
+    case ST::Diamond:{
+        QPointF point1((ptStart.x()+ptEnd.x())/2,ptStart.y());
+        QPointF point2(ptStart.x(),(ptEnd.y()+ptStart.y())/2);
+        QPointF point3((ptStart.x()+ptEnd.x())/2,ptEnd.y());
+        QPointF point4(ptEnd.x(),(ptEnd.y()+ptStart.y())/2);
+        QVector<QPointF> points;
+        points<<point1<<point2<<point3<<point4;
+        painter.drawPolygon(points);
+    }
+        break;
     case ST::Rectangle:
         painter.drawRect(QRectF(ptStart,ptEnd));
         break;

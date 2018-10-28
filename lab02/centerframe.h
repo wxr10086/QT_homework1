@@ -36,6 +36,7 @@ class CenterFrame : public QFrame
      void selectPicture();
 
  protected slots:
+     void on_btnLXClicked();
      void on_btnRectClicked();
      void on_btnEllipseClicked();
      void on_btnLineClicked();
@@ -49,6 +50,7 @@ class CenterFrame : public QFrame
      QHBoxLayout* hLayout;
      DrawWidget* drawWidget;
      QGroupBox* group;
+     QPushButton* btnLX;
      QPushButton* btnRect;
      QPushButton* btnEllipse;
      QPushButton* btnLine;

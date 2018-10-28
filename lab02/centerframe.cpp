@@ -10,6 +10,7 @@
 #include <QLineEdit>
 #include <QDebug>
 #include <QFileDialog>
+#include <QPoint>
 
 CenterFrame::CenterFrame(QWidget *parent) : QFrame(parent)
 
@@ -56,6 +57,26 @@ void CenterFrame::createUserCommandArea()
     painter.drawRect(3,3,p.size().width()-2*3,p.size().height()-2*3);
     btnRect->setIcon (QIcon(p));
 
+
+    btnLX = new QPushButton(group);
+    btnLX->setToolTip("绘制菱形");
+    btnLX->setCheckable(true);
+    btnLX->setIconSize(p.size());
+
+    connect(btnLX,&QPushButton::clicked,
+            this,&CenterFrame::on_btnLXClicked);
+
+    p.fill(BACKGROUND_COLOR);
+    QPointF pt1(3,p.size().height()/2);
+     QPointF pt2(p.size().width()/2,3);
+    QPointF pt3(p.size().width()-3,p.size().height()/2);
+    QPointF pt4(p.size().width()/2,p.size().height()-3);
+    QVector <QPointF> pts;
+    pts.clear();
+    pts<<pt1<<pt2<<pt2<<pt3<<pt3<<pt4<<pt4<<pt1;
+    painter.drawPolygon(pts);
+    btnLX->setIcon (QIcon(p));
+
     // 圆形按钮
     btnEllipse = new QPushButton(group);
     btnEllipse->setToolTip("绘制圆形");
@@ -88,11 +109,11 @@ void CenterFrame::createUserCommandArea()
 
     p.fill(BACKGROUND_COLOR);
     // 三角形的三个顶点
-    QPointF pt1(3,p.size().height()-3);
-    QPointF pt2(p.size().width()/2,3);
-    QPointF pt3(-3+p.size().width(),-3+p.size().height());
-    QVector<QPointF> pts;
-    pts<<pt1<<pt2<<pt2<<pt3<<pt3<<pt1;
+    QPointF pa1(3,p.size().height()-3);
+    QPointF pa2(p.size().width()/2,3);
+    QPointF pa3(-3+p.size().width(),-3+p.size().height());
+    QVector<QPointF> pas;
+    pas<<pa1<<pa2<<pa2<<pa3<<pa3<<pa1;
 
     // 使用drawLines时需要注意，点数必须为偶数，两两成对作为一个边
     // 如果是奇数，最后一个点会被舍弃
@@ -139,7 +160,8 @@ void CenterFrame::createUserCommandArea()
     gridLayout->addWidget(btnTriangle,1,0);
     gridLayout->addWidget(btnLine,1,1);
     gridLayout->addWidget(btnText,2,0);
-    gridLayout->addWidget(btnImg,2,1);
+    gridLayout->addWidget(btnLX,2,1);
+    gridLayout->addWidget(btnImg,3,0);
     gridLayout->setMargin(3);
     gridLayout->setSpacing(3);
     group->setLayout(gridLayout);
@@ -208,6 +230,7 @@ void CenterFrame::createUI()
 void CenterFrame::updateButtonStatus()
 {
     // 首先将所有按键复位
+    btnLX->setCheckable(false);
     btnRect->setChecked(false);
     btnLine->setChecked(false);
     btnTriangle->setChecked(false);
@@ -217,6 +240,9 @@ void CenterFrame::updateButtonStatus()
 
     // 然后根据设置的绘图类型重新切换按键状态
     switch (drawWidget->shapeType()) {
+    case ST::Diamond:
+        btnLX->setCheckable(true);
+        break;
     case ST::Rectangle:
         btnRect->setChecked(true);
         break;
@@ -276,6 +302,15 @@ void CenterFrame::on_btnEllipseClicked()
 {
     if(btnEllipse->isChecked()){
         drawWidget->setShapeType(ST::Ellipse);
+        updateButtonStatus();
+    }else{
+        drawWidget->setShapeType(ST::None);
+    }
+}
+void CenterFrame::on_btnLXClicked()
+{
+    if(btnLX->isChecked()){
+        drawWidget->setShapeType(ST::Diamond);
         updateButtonStatus();
     }else{
         drawWidget->setShapeType(ST::None);
