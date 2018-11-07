@@ -260,7 +260,7 @@ void dataWorker::httpGet(QString url)
 {
     QNetworkRequest request;
     request.setUrl(QUrl(url));
-    
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     manager->get(request);
 }
 
