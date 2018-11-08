@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     centerFrame = new CenterFrame;   //新建CenterFrame对象
     setCentralWidget (centerFrame);  //新建的centerFrame->insideWidget()对象作为主窗口的中央窗口
     createToolBar ();                //创建一个工具栏
-    setMinimumSize (600, 400);       //设置主窗体的最小尺寸
+    setMinimumSize (600, 600);       //设置主窗体的最小尺寸
     setWindowTitle(tr("实验二 - 窗口、控件及基本绘图实验 "));
 
     penStyleChangged(styleComboBox->currentData().toInt());      //初始化线型，设置控件中当前值作为初始值

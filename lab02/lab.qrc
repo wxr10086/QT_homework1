@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="user">res/png/t01409e1d2a7f5c4229.jpg</file>
+        <file>res/png/t0115e58067ce5e097b.jpg</file>
+        <file>res/png/t016a2ffcd60da5308e.jpg</file>
+        <file>res/png/t01510744f32a73a702.jpg</file>
+    </qresource>
+</RCC>

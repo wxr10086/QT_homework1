@@ -20,7 +20,7 @@ DrawWidget::DrawWidget(QWidget *parent) : QWidget(parent)
     setPalette (QPalette(BACKGROUND_COLOR));
     pix = new QPixmap(size());      //此QPixmap对象用来准备随时接受绘制的内容
     pix->fill (Qt::transparent);          //填充背景色为透明
-    setMinimumSize (600, 400);      //设置绘制区窗体的最小尺寸
+    setMinimumSize (600,600);      //设置绘制区窗体的最小尺寸
     imgmap=new QPixmap(size());     //此QPixmap对象用来准备随时接受绘制的图片
     imgmap->fill (Qt::transparent);          //填充背景色为透明
 }

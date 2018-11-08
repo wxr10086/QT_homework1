@@ -58,13 +58,13 @@ void CenterFrame::createUserCommandArea()
     btnRect->setIcon (QIcon(p));
 
 
-    btnLX = new QPushButton(group);
-    btnLX->setToolTip("绘制菱形");
-    btnLX->setCheckable(true);
-    btnLX->setIconSize(p.size());
+    btnDiamond = new QPushButton(group);
+    btnDiamond->setToolTip("绘制菱形");
+    btnDiamond->setCheckable(true);
+    btnDiamond->setIconSize(p.size());
 
-    connect(btnLX,&QPushButton::clicked,
-            this,&CenterFrame::on_btnLXClicked);
+    connect(btnDiamond,&QPushButton::clicked,
+            this,&CenterFrame::on_btnDiamondClicked);
 
     p.fill(BACKGROUND_COLOR);
     QPointF pt1(3,p.size().height()/2);
@@ -72,10 +72,10 @@ void CenterFrame::createUserCommandArea()
     QPointF pt3(p.size().width()-3,p.size().height()/2);
     QPointF pt4(p.size().width()/2,p.size().height()-3);
     QVector <QPointF> pts;
-    pts.clear();
+    //pts.clear();
     pts<<pt1<<pt2<<pt2<<pt3<<pt3<<pt4<<pt4<<pt1;
     painter.drawPolygon(pts);
-    btnLX->setIcon (QIcon(p));
+    btnDiamond->setIcon (QIcon(p));
 
     // 圆形按钮
     btnEllipse = new QPushButton(group);
@@ -117,7 +117,7 @@ void CenterFrame::createUserCommandArea()
 
     // 使用drawLines时需要注意，点数必须为偶数，两两成对作为一个边
     // 如果是奇数，最后一个点会被舍弃
-    painter.drawLines(pts);
+    painter.drawLines(pas);
     btnTriangle->setIcon (QIcon(p));
     connect(btnTriangle,&QPushButton::clicked,
             this,&CenterFrame::on_btnTriangleClicked);
@@ -160,7 +160,7 @@ void CenterFrame::createUserCommandArea()
     gridLayout->addWidget(btnTriangle,1,0);
     gridLayout->addWidget(btnLine,1,1);
     gridLayout->addWidget(btnText,2,0);
-    gridLayout->addWidget(btnLX,2,1);
+    gridLayout->addWidget(btnDiamond,2,1);
     gridLayout->addWidget(btnImg,3,0);
     gridLayout->setMargin(3);
     gridLayout->setSpacing(3);
@@ -230,7 +230,7 @@ void CenterFrame::createUI()
 void CenterFrame::updateButtonStatus()
 {
     // 首先将所有按键复位
-    btnLX->setCheckable(false);
+    btnDiamond->setChecked(false);
     btnRect->setChecked(false);
     btnLine->setChecked(false);
     btnTriangle->setChecked(false);
@@ -241,7 +241,7 @@ void CenterFrame::updateButtonStatus()
     // 然后根据设置的绘图类型重新切换按键状态
     switch (drawWidget->shapeType()) {
     case ST::Diamond:
-        btnLX->setCheckable(true);
+        btnDiamond->setChecked(true);
         break;
     case ST::Rectangle:
         btnRect->setChecked(true);
@@ -307,9 +307,9 @@ void CenterFrame::on_btnEllipseClicked()
         drawWidget->setShapeType(ST::None);
     }
 }
-void CenterFrame::on_btnLXClicked()
+void CenterFrame::on_btnDiamondClicked()
 {
-    if(btnLX->isChecked()){
+    if(btnDiamond->isChecked()){
         drawWidget->setShapeType(ST::Diamond);
         updateButtonStatus();
     }else{
