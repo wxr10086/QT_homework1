@@ -3,6 +3,8 @@
 #include <dataworker.h>
 #include <QDateTime>
 
+#include <QTimer>
+
 
 
 /**
@@ -32,6 +34,18 @@ Widget::Widget(QWidget *parent) :
     connect(worker,&dataWorker::dataParseFinished,this,&Widget::updateDataChart);
 
 
+    QTimer *timer = new QTimer(this);
+    beiJingLabel = new QLabel(this);
+    displayTime();
+    connect(timer, SIGNAL(timeout()), this, SLOT(displayTime()));
+    //connect(timer, SIGNAL(timeout()), this, SLOT(displayTime()));
+    timer->start(1000);
+//    startTimer(2000);
+//      startTimer(5500);
+//      startTimer(10500);
+//    beiJingLabel->show();
+
+
 }
 
 Widget::~Widget()
@@ -45,9 +59,18 @@ Widget::~Widget()
  */
 void Widget::initComboMonth()
 {
+    QDateTime dt=QDateTime::currentDateTime();
+   // QTime time;
+    QDate date;
+
+   // dt.setTime(time.currentTime());
+    dt.setDate(date.currentDate());
+
+    QString currentDate = dt.toString("yyyy.MM");
+    //QString currentDate1 = dt.toString("hh:mm:ss");
     QStringList month;
     for(int i=10;i>0;i--){
-        month<<QString("2017-%1").arg(i,2,10,QChar('0'));
+        month<<dt.toString("yyyy-%1").arg(i,2,10,QChar('0'));
     }
     ui->comboMonth->clear();
     ui->comboMonth->addItems(month);
@@ -521,3 +544,20 @@ void Widget::on_cbLegendItalic_clicked()
     font.setItalic(!font.italic());
     chart->legend()->setFont(font);
 }
+
+ void Widget::displayTime()
+ {
+     QDateTime dt=QDateTime::currentDateTime();
+     QTime time;
+     QDate date;
+
+     dt.setTime(time.currentTime());
+     dt.setDate(date.currentDate());
+
+     QString currentDate = dt.toString("yyyy.MM.dd");
+     QString currentDate1 = dt.toString("hh:mm:ss");
+     ui->beiJingLabel->setText(currentDate);
+     ui->beiJingLabel1->setText(currentDate1);
+
+ }
+

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtCharts>
+#include <QtGui>
 
 
 namespace Ui {
@@ -48,10 +49,13 @@ private slots:
 
 
 
+
     void on_btnWeather_clicked();
     void on_btnAQI_clicked();
 
-
+public slots:
+     void displayTime();
+     //void timerEvent(QTimerEvent* t);
 
 
 
@@ -61,6 +65,10 @@ private:
     Ui::Widget *ui;
     dataWorker* worker;
     int switch_num;
+    //QLabel beiJingLabel;
+    QTimer *timer;
+    QLabel *beiJingLabel;
+    QLabel *beiJingLabel1;
 
 
 };
